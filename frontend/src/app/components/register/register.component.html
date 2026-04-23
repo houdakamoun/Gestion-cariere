@@ -1,0 +1,135 @@
+<form [formGroup]="registerForm" (ngSubmit)="register()">
+  <div class="wrap">
+    <div class="card">
+      <div class="card-header">
+        <div class="badge">new user</div>
+        <h1>Create your account</h1>
+        <p>Fill in your details to get started</p>
+      </div>
+
+      <div class="card-body">
+        <p class="section-label">Personal info</p>
+
+        <div class="group">
+          <!-- NAME -->
+          <div class="field">
+            <label class="field-label">nom</label>
+            <div class="input-wrap">
+              <input type="text" placeholder="nom" formControlName="nom" />
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">prénom</label>
+            <div class="input-wrap">
+              <input type="text" placeholder="" formControlName="prenom" />
+            </div>
+          </div>
+          <!-- EMAIL -->
+          <div class="field">
+            <label class="field-label">adresse email</label>
+            <div class="input-wrap">
+              <input
+                type="email"
+                placeholder="jane@company.com"
+                formControlName="email"
+              />
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">date de naissance</label>
+            <div class="input-wrap">
+              <input
+                type="date"
+                placeholder="date de naissance"
+                formControlName="date_naissance"
+              />
+            </div>
+          </div>
+          <!-- ROLE -->
+          <div class="field">
+            <label class="field-label">Role</label>
+            <div class="input-wrap">
+              <select formControlName="role">
+                <option value="Employee">Employee</option>
+                <option value="RH">RH</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- PASSWORD -->
+          <div class="field">
+            <label class="field-label">Password</label>
+            <div class="input-wrap">
+              <input
+                type="password"
+                placeholder="••••••••"
+                formControlName="password"
+              />
+            </div>
+          </div>
+
+          <!-- CONFIRM PASSWORD -->
+          <div class="field">
+            <label class="field-label">Confirm password</label>
+            <div class="input-wrap">
+              <input
+                type="password"
+                placeholder="••••••••"
+                formControlName="confirmPassword"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <p class="section-label">Employment details</p>
+
+        <div class="group">
+          <!-- POSITION -->
+          <div class="field">
+            <label class="field-label">Position</label>
+            <div class="input-wrap">
+              <input
+                type="text"
+                placeholder="e.g. Designer"
+                formControlName="position"
+              />
+            </div>
+          </div>
+
+          <!-- DEPARTMENT -->
+          <div class="field">
+            <label class="field-label">Department</label>
+            <div class="input-wrap">
+              <select formControlName="department">
+                <option value="">Select…</option>
+                <option>Développement</option>
+                <option>Data</option>
+                <option>DESIGN</option>
+                <option>Ressources Humaines</option>
+                <option>Finance</option>
+                <option>Commercial</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- HIRE DATE -->
+          <div class="field">
+            <label class="field-label">Hire date</label>
+            <div class="input-wrap">
+              <input type="date" formControlName="hireDate" />
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBMIT -->
+        <button class="btn-submit" type="submit">Create account →</button>
+
+        <p class="footer-note">
+          Already have an account? <a routerLink="/login">Sign in</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</form>

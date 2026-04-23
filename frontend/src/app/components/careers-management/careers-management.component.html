@@ -1,0 +1,32 @@
+<div class="stats-container">
+  <div class="stat-card">
+    <mat-icon>group</mat-icon>
+    <h2>{{ stats.employees }}</h2>
+    <p>Employees</p>
+  </div>
+
+  <div class="stat-card">
+    <mat-icon>trending_up</mat-icon>
+    <h2>{{ stats.promotions }}</h2>
+    <p>Promotions</p>
+  </div>
+
+  <div class="stat-card">
+    <mat-icon>business</mat-icon>
+    <h2>{{ stats.departments }}</h2>
+    <p>Departments</p>
+  </div>
+</div>
+<div class="actions">
+  <div class="action-card" routerLink="/career-list">
+    <mat-icon>list</mat-icon>
+    <h3>Employees List</h3>
+    <p>Manage all employees careers</p>
+  </div>
+
+  <div class="action-card" routerLink="/career-timeline">
+    <mat-icon>timeline</mat-icon>
+    <h3>Career Timeline</h3>
+    <p>Track career evolution</p>
+  </div>
+</div>

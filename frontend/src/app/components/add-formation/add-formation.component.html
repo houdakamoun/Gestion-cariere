@@ -1,0 +1,40 @@
+<div class="container">
+  <h2>Add Formation</h2>
+
+  <form [formGroup]="formationForm" (ngSubmit)="onSubmit()">
+    <!-- TITLE -->
+    <label>Title</label>
+    <input type="text" formControlName="title" />
+
+    <!-- DURATION -->
+    <label>Duration</label>
+    <input type="text" formControlName="duration" />
+
+    <!-- TRAINER -->
+    <label>Trainer</label>
+    <select formControlName="trainerId">
+      <option value="">-- Select Employee --</option>
+
+      <option *ngFor="let emp of employees" [value]="emp.id">
+        {{ emp.prenom }} {{ emp.nom }} - {{ emp.email }}
+      </option>
+    </select>
+
+    <!-- STATUS -->
+    <label>Status</label>
+    <select formControlName="status">
+      <option value="Planned">Planned</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Completed">Completed</option>
+    </select>
+
+    <!-- DATE -->
+    <label>Date</label>
+    <input type="date" formControlName="date" />
+
+    <!-- SUBMIT -->
+    <button type="submit" [disabled]="formationForm.invalid">
+      Save Formation
+    </button>
+  </form>
+</div>

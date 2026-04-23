@@ -1,0 +1,282 @@
+/* ===============================
+   HEADER GLOBAL (GLASS EFFECT)
+================================ */
+.main-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.75);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ===============================
+   CONTAINER
+================================ */
+.header-container {
+  max-width: 1500px;
+  margin: auto;
+  padding: 12px 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ===============================
+   LOGO (FIX POUR TON LOGO 279x93)
+================================ */
+.logo-section {
+  display: flex;
+  align-items: center;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+}
+
+/* IMPORTANT : pas de crop */
+.logo-icon {
+  height: 42px;
+  max-width: 150px;
+  display: flex;
+  align-items: center;
+}
+
+.logo-icon img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+
+  /* effet premium */
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
+  transition: transform 0.2s ease;
+}
+
+.logo-link:hover img {
+  transform: scale(1.05);
+}
+
+/* ===============================
+   NAVIGATION
+================================ */
+.nav-menu {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 8px 14px;
+  border-radius: 10px;
+
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 500;
+
+  transition: all 0.25s ease;
+}
+
+.nav-link mat-icon {
+  font-size: 20px;
+}
+
+.nav-link:hover {
+  background: rgba(102, 126, 234, 0.1);
+  color: #4f46e5;
+  transform: translateY(-1px);
+}
+
+.nav-link.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+/* ===============================
+   RIGHT SECTION
+================================ */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* ===============================
+   SEARCH BAR
+================================ */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid #e2e8f0;
+
+  padding: 8px 12px;
+  border-radius: 12px;
+
+  transition: all 0.2s ease;
+}
+
+.search-bar:focus-within {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+}
+
+.search-bar mat-icon {
+  color: #94a3b8;
+}
+
+/* ===============================
+   ICON BUTTON (NOTIF)
+================================ */
+.icon-btn {
+  position: relative;
+
+  border: none;
+  background: transparent;
+
+  padding: 8px;
+  border-radius: 10px;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.icon-btn:hover {
+  background: #f1f5f9;
+}
+
+.icon-btn mat-icon {
+  color: #64748b;
+}
+
+/* BADGE */
+.badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+
+  background: #ef4444;
+  color: white;
+
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 20px;
+}
+
+/* ===============================
+   USER MENU
+================================ */
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: rgba(255, 255, 255, 0.6);
+  padding: 5px 10px;
+  border-radius: 30px;
+
+  border: 1px solid #e2e8f0;
+  transition: 0.2s;
+}
+
+.user-menu:hover {
+  background: #f8fafc;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.user-text .name {
+  font-weight: 600;
+  font-size: 13px;
+  color: #1e293b;
+}
+
+.user-text .role {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+/* ===============================
+   MOBILE MENU BUTTON
+================================ */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.mobile-menu-btn mat-icon {
+  font-size: 26px;
+}
+
+/* ===============================
+   MOBILE NAV
+================================ */
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  left: -100%;
+
+  width: 280px;
+  height: 100%;
+
+  background: white;
+  z-index: 1001;
+
+  transition: 0.3s;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-nav.open {
+  left: 0;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 900px) {
+  .nav-menu {
+    display: none;
+  }
+
+  .search-bar {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .user-text {
+    display: none;
+  }
+
+  .header-container {
+    padding: 10px 15px;
+  }
+
+  .logo-icon {
+    height: 36px;
+    max-width: 120px;
+  }
+}

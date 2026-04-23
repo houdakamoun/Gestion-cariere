@@ -1,0 +1,33 @@
+<div class="container">
+  <h2 class="title">Employees Careers</h2>
+
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Position</th>
+          <th>Department</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let c of careers">
+          <td>{{ c.name }}</td>
+          <td>{{ c.position }}</td>
+          <td>
+            <span class="badge">{{ c.department }}</span>
+          </td>
+          <td class="actions">
+            <button class="btn-view" [routerLink]="['/career-detail', c.id]">
+              View
+            </button>
+
+            <button class="btn-edit">Edit</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

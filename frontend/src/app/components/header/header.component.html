@@ -1,0 +1,107 @@
+<header class="main-header">
+  <div class="header-container">
+    <!-- LOGO -->
+    <div class="logo-section">
+      <a routerLink="/dashboard" class="logo-link">
+        <div class="logo-icon">
+          <img src="./assets/image/logo-teckup.png" alt="Logo" />
+        </div>
+      </a>
+    </div>
+
+    <!-- NAV -->
+    <nav class="nav-menu">
+      <!-- DASHBOARD (tout le monde) -->
+      <a routerLink="/dashboard" class="nav-link">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+
+      <!-- ADMIN -->
+      <ng-container *ngIf="role === 'ADMIN'">
+        <a routerLink="/users" class="nav-link">
+          <mat-icon>group</mat-icon>
+          <span>Users</span>
+        </a>
+
+        <a routerLink="/formations" class="nav-link">
+          <mat-icon>school</mat-icon>
+          <span>Formations</span>
+        </a>
+      </ng-container>
+
+      <!-- RH -->
+      <ng-container *ngIf="role === 'RH'">
+        <a routerLink="/careers" class="nav-link">
+          <mat-icon>trending_up</mat-icon>
+          <span>Carrières</span>
+        </a>
+
+        <a routerLink="/formations" class="nav-link">
+          <mat-icon>school</mat-icon>
+          <span>Formations</span>
+        </a>
+
+        <a routerLink="/evaluations" class="nav-link">
+          <mat-icon>assessment</mat-icon>
+          <span>Evaluations</span>
+        </a>
+      </ng-container>
+
+      <!-- EMPLOYEE -->
+      <ng-container *ngIf="role === 'EMPLOYEE'">
+        <a routerLink="/my-formations" class="nav-link">
+          <mat-icon>school</mat-icon>
+          <span>My Formations</span>
+        </a>
+
+        <a routerLink="/profile" class="nav-link">
+          <mat-icon>person</mat-icon>
+          <span>Profile</span>
+        </a>
+      </ng-container>
+
+      <!-- NON CONNECTÉ -->
+      <ng-container *ngIf="!isLogged()">
+        <a routerLink="/register" class="nav-link">
+          <mat-icon>person_add</mat-icon>
+          <span>Signup</span>
+        </a>
+
+        <a routerLink="/login" class="nav-link">
+          <mat-icon>login</mat-icon>
+          <span>Login</span>
+        </a>
+      </ng-container>
+
+      <!-- LOGOUT -->
+      <button *ngIf="isLogged()" (click)="logout()" class="logout-btn">
+        <mat-icon>logout</mat-icon>
+        Logout
+      </button>
+    </nav>
+
+    <!-- RIGHT SIDE -->
+    <div class="header-right">
+      <!-- SEARCH -->
+      <div class="search-bar">
+        <mat-icon>search</mat-icon>
+        <input type="text" placeholder="Rechercher..." />
+      </div>
+
+      <!-- NOTIFICATIONS -->
+      <button class="icon-btn">
+        <mat-icon>notifications</mat-icon>
+        <span class="badge">3</span>
+      </button>
+
+      <!-- USER INFO -->
+      <div class="user-menu" *ngIf="isLogged()">
+        <mat-icon>account_circle</mat-icon>
+        <span>
+          {{ connectedUser?.firstName }} {{ connectedUser?.lastName }}
+        </span>
+      </div>
+    </div>
+  </div>
+</header>

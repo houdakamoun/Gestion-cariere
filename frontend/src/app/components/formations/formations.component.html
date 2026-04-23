@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="header">
+    <h2>Formations</h2>
+    <button class="btn-add" routerLink="/add-formations">
+      + Add Formation
+    </button>
+  </div>
+  <select (change)="filter($event)">
+    <option value="">All</option>
+    <option value="Planned">Planned</option>
+    <option value="In Progress">In Progress</option>
+    <option value="Completed">Completed</option>
+  </select>
+  <div class="table-card">
+    <table *ngIf="formations.length > 0; else noData">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Duration</th>
+          <th>Trainer</th>
+          <th>Status</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let f of formations">
+          <td>{{ f.title }}</td>
+          <td>{{ f.duration }}</td>
+          <td>{{ f.trainer?.nom }} {{ f.trainer?.prenom }}</td>
+          <td>{{ f.date | date }}</td>
+          <td>
+            <span
+              class="badge"
+              [ngClass]="{
+                completed: f.status === 'Completed',
+                progress: f.status === 'In Progress',
+                planned: f.status === 'Planned',
+              }"
+            >
+              {{ f.status }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #noData>
+      <p>No formations available...</p>
+    </ng-template>
+  </div>
+</div>

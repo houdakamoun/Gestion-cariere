@@ -1,0 +1,36 @@
+<!-- ADMIN DASHBOARD -->
+<div *ngIf="role === 'ADMIN'">
+  <h2>Admin Dashboard</h2>
+
+  <div class="cards">
+    <div>Total Users</div>
+    <div>Total Formations</div>
+    <div>System Stats</div>
+  </div>
+
+  <p>Welcome Admin 👑</p>
+</div>
+
+<!-- RH DASHBOARD -->
+<div *ngIf="role === 'RH'">
+  <h2>RH Dashboard</h2>
+
+  <div class="cards">
+    <div>Formations RH</div>
+    <div>Employees</div>
+    <div>Departements</div>
+  </div>
+
+  <p>Welcome HR 👩‍💼</p>
+</div>
+<div *ngIf="role === 'ADMIN'">
+  <a routerLink="/users">Users</a>
+</div>
+
+<div *ngIf="role === 'RH'">
+  <a routerLink="/formations">Formations</a>
+</div>
+<!-- LOADING / UNKNOWN -->
+<div *ngIf="!role">
+  <p>Loading dashboard...</p>
+</div>

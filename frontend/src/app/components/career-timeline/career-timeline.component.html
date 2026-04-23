@@ -1,0 +1,15 @@
+<div class="timeline-container">
+  <h2>Career Timeline</h2>
+
+  <div class="timeline">
+    <div class="timeline-item" *ngFor="let item of timeline">
+      <div class="timeline-dot"></div>
+
+      <div class="timeline-content">
+        <h3>{{ item.position }}</h3>
+        <p>{{ item.department }}</p>
+        <span class="date">{{ item.date }}</span>
+      </div>
+    </div>
+  </div>
+</div>
