@@ -9,22 +9,25 @@ import {
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service';
+import { DepartmenteTsService } from '../../services/departmente.ts.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-
+  departments: any[] = [];
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private toastr: ToastrService,
     private authService: AuthService,
+    private departmentService: DepartmenteTsService,
   ) {
     this.registerForm = this.fb.group(
       {
@@ -48,7 +51,9 @@ export class RegisterComponent {
       { validators: this.passwordMatchValidator },
     );
   }
-
+  ngOnInit(): void {
+    this.loadDepartments();
+  }
   passwordMatchValidator(form: AbstractControl) {
     const password = form.get('password')?.value;
     const confirmPassword = form.get('confirmPassword')?.value;
@@ -94,6 +99,17 @@ export class RegisterComponent {
         console.log('Erreur backend :', err);
 
         this.toastr.error(err.error?.message || 'Erreur serveur');
+      },
+    });
+  }
+  loadDepartments() {
+    this.departmentService.getDepartments().subscribe({
+      next: (data) => {
+        console.log('departments:', data); // 👈 DOIT afficher ton JSON
+        this.departments = data;
+      },
+      error: (err) => {
+        console.log(err);
       },
     });
   }

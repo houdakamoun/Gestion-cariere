@@ -1,0 +1,29 @@
+<div class="card-container">
+  <div class="field">
+    <label>Utilisateur</label>
+
+    <select [(ngModel)]="selectedUser">
+      <option [ngValue]="null" disabled>Sélectionner un utilisateur</option>
+
+      <option *ngFor="let u of users" [ngValue]="u.id">
+        {{ u.nom }} {{ u.prenom }}
+      </option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>Formation</label>
+
+    <select [(ngModel)]="selectedFormation">
+      <option [ngValue]="null" disabled>Sélectionner une formation</option>
+
+      <option *ngFor="let f of formations" [ngValue]="f.id">
+        {{ f.title }}
+      </option>
+    </select>
+  </div>
+
+  <button (click)="assign()" [disabled]="!selectedUser || !selectedFormation">
+    Assigner
+  </button>
+</div>

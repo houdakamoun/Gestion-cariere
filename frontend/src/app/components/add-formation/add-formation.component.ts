@@ -45,6 +45,7 @@ export class AddFormationComponent implements OnInit {
       next: (data) => {
         console.log('🔥 EMPLOYEES DATA =', data);
         this.employees = data;
+        console.log('🔥 employees length =', this.employees.length);
       },
       error: (err) => {
         console.error('❌ API ERROR =', err);
@@ -54,26 +55,27 @@ export class AddFormationComponent implements OnInit {
   onSubmit() {
     if (this.formationForm.invalid) return;
 
-    const trainerId = this.formationForm.value.trainerId;
-
-    if (!trainerId) {
-      console.error('❌ trainerId missing');
-      return;
-    }
+    const trainerId = Number(this.formationForm.value.trainerId);
 
     const data = {
       title: this.formationForm.value.title,
       duration: this.formationForm.value.duration,
-      trainerId: Number(trainerId),
-      status: this.formationForm.value.status,
-      date: this.formationForm.value.date,
+      trainerId: isNaN(trainerId) ? null : trainerId,
+      status: this.formationForm.value.status || 'Planned',
+      date: this.formationForm.value.date
+        ? new Date(this.formationForm.value.date)
+        : null,
     };
 
     console.log('📦 FINAL DATA SENT =', data);
 
     this.service.create(data).subscribe({
       next: () => this.router.navigate(['/formations']),
-      error: (err) => console.error('❌ ERROR =', err),
+      error: (err) => {
+        console.error('❌ FULL ERROR =', err);
+        console.error('❌ STATUS =', err.status);
+        console.error('❌ BACKEND =', err.error);
+      },
     });
   }
 }

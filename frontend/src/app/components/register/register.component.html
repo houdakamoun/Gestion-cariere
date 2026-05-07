@@ -104,12 +104,10 @@
             <div class="input-wrap">
               <select formControlName="department">
                 <option value="">Select…</option>
-                <option>Développement</option>
-                <option>Data</option>
-                <option>DESIGN</option>
-                <option>Ressources Humaines</option>
-                <option>Finance</option>
-                <option>Commercial</option>
+
+                <option *ngFor="let d of departments" [value]="d.name">
+                  {{ d.name }}
+                </option>
               </select>
             </div>
           </div>

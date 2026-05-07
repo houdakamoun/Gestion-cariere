@@ -1,25 +1,38 @@
 <div class="container">
+  <!-- 🔵 HEADER -->
   <div class="header">
     <h2>Formations</h2>
-    <button class="btn-add" routerLink="/add-formations">
-      + Add Formation
-    </button>
+
+    <div class="actions">
+      <button class="btn-add" routerLink="/add-formations">
+        + Ajouter Formation
+      </button>
+
+      <button class="btn-secondary" routerLink="/assigner">
+        + Assigner Formation
+      </button>
+    </div>
   </div>
-  <select (change)="filter($event)">
-    <option value="">All</option>
-    <option value="Planned">Planned</option>
-    <option value="In Progress">In Progress</option>
-    <option value="Completed">Completed</option>
-  </select>
+
+  <!-- 🔵 FILTER -->
+  <div class="toolbar">
+    <select (change)="filter($event)">
+      <option value="">All</option>
+      <option value="Planned">Planned</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Completed">Completed</option>
+    </select>
+  </div>
+
+  <!-- 🔵 TABLE -->
   <div class="table-card">
     <table *ngIf="formations.length > 0; else noData">
       <thead>
         <tr>
           <th>Title</th>
           <th>Duration</th>
-          <th>Trainer</th>
-          <th>Status</th>
           <th>Date</th>
+          <th>Status</th>
         </tr>
       </thead>
 
@@ -27,8 +40,8 @@
         <tr *ngFor="let f of formations">
           <td>{{ f.title }}</td>
           <td>{{ f.duration }}</td>
-          <td>{{ f.trainer?.nom }} {{ f.trainer?.prenom }}</td>
           <td>{{ f.date | date }}</td>
+
           <td>
             <span
               class="badge"
@@ -46,7 +59,35 @@
     </table>
 
     <ng-template #noData>
-      <p>No formations available...</p>
+      <p class="empty">No formations available...</p>
     </ng-template>
+  </div>
+
+  <!-- 🎥 VIDEO SECTION -->
+  <div class="video-section">
+    <h2>Training Videos</h2>
+
+    <div class="video-grid">
+      <div class="video-card" *ngFor="let v of videos">
+        <div class="video-thumbnail">
+          <img [src]="v.thumbnail" alt="video" />
+          <button class="play-btn" (click)="openVideo(v.url)">▶</button>
+        </div>
+
+        <div class="video-info">
+          <h4>{{ v.title }}</h4>
+          <p>{{ v.duration }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🎥 MODAL VIDEO -->
+  <div class="video-modal" *ngIf="selectedVideo">
+    <div class="modal-content">
+      <span class="close" (click)="closeVideo()">✖</span>
+
+      <iframe [src]="selectedVideo" frameborder="0" allowfullscreen> </iframe>
+    </div>
   </div>
 </div>

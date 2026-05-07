@@ -1,0 +1,49 @@
+<table class="user-table">
+  <tr>
+    <th>Nom</th>
+    <th>Prénom</th>
+    <th>Email</th>
+    <th>Département</th>
+    <th>Poste</th>
+    <th>Role</th>
+    <th>Hire Date</th>
+    <th>Photo</th>
+    <th>CV</th>
+    <th>Action</th>
+  </tr>
+
+  <tr *ngFor="let user of users">
+    <td>{{ user.nom }}</td>
+    <td>{{ user.prenom }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.department }}</td>
+    <td>{{ user.position }}</td>
+    <td>{{ user.role }}</td>
+    <td>{{ user.hireDate | date }}</td>
+
+    <!-- PHOTO -->
+    <td>
+      <img
+        *ngIf="user.profile?.photo"
+        [src]="'http://localhost:3000' + user.profile.photo"
+        width="50"
+      />
+
+      <!-- CV -->
+
+      <!-- ACTIONS -->
+    </td>
+
+    <td>
+      <!-- PHOTO -->
+      <input type="file" (change)="onFileChange($event, user.id, 'photo')" />
+
+      <!-- CV -->
+      <input type="file" (change)="onFileChange($event, user.id, 'cv')" />
+
+      <!-- BOUTON SAVE -->
+      <button (click)="saveProfile(user.id)">💾 Enregistrer</button>
+      <button [routerLink]="['/profile', user.id]">👁 Profil</button>
+    </td>
+  </tr>
+</table>

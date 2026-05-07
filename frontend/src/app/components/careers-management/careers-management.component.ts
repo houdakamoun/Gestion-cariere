@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CareerServiceService } from '../../services/career-service.service';
 
 @Component({
@@ -18,22 +18,42 @@ export class CareerManagementComponent implements OnInit {
     departments: 0,
   };
 
-  constructor(
-    private router: Router,
-    private service: CareerServiceService,
-  ) {}
+  loading = true;
+  error = false;
+
+  constructor(private service: CareerServiceService) {}
 
   ngOnInit(): void {
     this.loadStats();
   }
 
   loadStats(): void {
-    this.service.getCareerStats().subscribe((data: any) => {
-      this.stats = data;
-    });
-  }
+    this.loading = true;
+    this.error = false;
 
-  navigate(path: string): void {
-    this.router.navigate([path]);
+    this.service.getCareerStats().subscribe({
+      next: (data: any) => {
+        this.stats = {
+          employees: data?.employees ?? 0,
+          promotions: data?.promotions ?? 0,
+          departments: data?.departments ?? 0,
+        };
+
+        this.loading = false;
+      },
+
+      error: (err) => {
+        console.error('Career stats error:', err);
+
+        this.stats = {
+          employees: 0,
+          promotions: 0,
+          departments: 0,
+        };
+
+        this.error = true;
+        this.loading = false;
+      },
+    });
   }
 }

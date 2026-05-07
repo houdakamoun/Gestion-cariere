@@ -1,9 +1,9 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
-// ================== MIDDLEWARE ==================
 app.use(
   cors({
     origin: "http://localhost:4200",
@@ -13,27 +13,40 @@ app.use(
 
 app.use(express.json());
 
-// 🔥 Logger (DOIT être AVANT les routes)
+// Logger
 app.use((req, res, next) => {
   console.log("➡️ REQUEST:", req.method, req.url);
   next();
 });
 
-// ================== ROUTES ==================
+// Routes
 const authRoutes = require("./routes/auth.routes");
 const userRoutes = require("./routes/user.routes");
 const formationRoutes = require("./routes/formation.routes");
+const assignmentRoutes = require("./routes/assignment.routes");
+const departmentRoutes = require("./routes/department.routes");
+const careerRoutes = require("./routes/career.routes");
+const profileRoutes = require("./routes/profile.routes");
+const statsRoutes = require("./routes/stats.routes");
 
 app.get("/", (req, res) => {
   res.send("Backend is running 🚀");
 });
 
-// ⚠️ ORDRE IMPORTANT
 app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/formations", formationRoutes);
-app.use("/api", userRoutes);
+app.use("/assignment", assignmentRoutes);
+app.use("/careers", careerRoutes);
+app.use("/api/departments", departmentRoutes);
+app.use("/profiles", profileRoutes);
 
-// ================== START SERVER ==================
+app.use("/api/stats", statsRoutes);
+
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+
+// Start server
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {

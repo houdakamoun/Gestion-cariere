@@ -6,20 +6,22 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
-  // ✅ GET ALL EMPLOYEES (role = EMPLOYEE)
-  getEmployees(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/employees`);
-  }
-  getUserById(id: number | null | undefined) {
-    if (!id) {
-      console.warn('❌ ID USER NULL');
-      return new Observable(); // évite crash
-    }
-
+  // USERS
+  getUserById(id: number) {
     return this.http.get(`${this.apiUrl}/users/${id}`);
+  }
+
+  // PROFILE (PHOTO + CV)
+  getProfile(id: number) {
+    return this.http.get(`${this.apiUrl}/profiles/${id}`);
+  }
+
+  // EMPLOYEES
+  getEmployees(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/users/employees`);
   }
 }

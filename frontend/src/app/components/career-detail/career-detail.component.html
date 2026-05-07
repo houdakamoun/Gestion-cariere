@@ -1,1 +1,24 @@
-<p>career-detail works!</p>
+<div class="container" *ngIf="career">
+  <h2>{{ career.title }}</h2>
+
+  <p><b>Position:</b> {{ career.position }}</p>
+  <p><b>Department:</b> {{ career.department }}</p>
+  <p><b>Base Salary:</b> {{ career.baseSalary }} DT</p>
+  <p><b>Description:</b> {{ career.description }}</p>
+
+  <hr />
+
+  <h3>Employees in this career</h3>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Hire Date</th>
+    </tr>
+
+    <tr *ngFor="let u of users">
+      <td>{{ u.nom }} {{ u.prenom }}</td>
+      <td>{{ u.hireDate | date }}</td>
+    </tr>
+  </table>
+</div>

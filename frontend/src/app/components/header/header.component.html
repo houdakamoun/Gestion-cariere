@@ -2,7 +2,7 @@
   <div class="header-container">
     <!-- LOGO -->
     <div class="logo-section">
-      <a routerLink="/dashboard" class="logo-link">
+      <a routerLink="/acceuil" class="logo-link">
         <div class="logo-icon">
           <img src="./assets/image/logo-teckup.png" alt="Logo" />
         </div>
@@ -12,21 +12,20 @@
     <!-- NAV -->
     <nav class="nav-menu">
       <!-- DASHBOARD (tout le monde) -->
-      <a routerLink="/dashboard" class="nav-link">
-        <mat-icon>dashboard</mat-icon>
-        <span>Dashboard</span>
+      <a routerLink="/acceuil" class="nav-link">
+        <mat-icon>home</mat-icon>
+        <span>Accueil</span>
       </a>
 
       <!-- ADMIN -->
       <ng-container *ngIf="role === 'ADMIN'">
-        <a routerLink="/users" class="nav-link">
-          <mat-icon>group</mat-icon>
-          <span>Users</span>
+        <a routerLink="/dashboard" class="nav-link">
+          <mat-icon>dashboard</mat-icon>
+          <span>dashboard</span>
         </a>
-
-        <a routerLink="/formations" class="nav-link">
-          <mat-icon>school</mat-icon>
-          <span>Formations</span>
+        <a routerLink="/profile" class="nav-link">
+          <mat-icon>person</mat-icon>
+          <span>Profile</span>
         </a>
       </ng-container>
 
@@ -41,26 +40,19 @@
           <mat-icon>school</mat-icon>
           <span>Formations</span>
         </a>
-
-        <a routerLink="/evaluations" class="nav-link">
-          <mat-icon>assessment</mat-icon>
-          <span>Evaluations</span>
+        <a routerLink="/user-list" class="nav-link">
+          <mat-icon>school</mat-icon>
+          <span>users</span>
         </a>
       </ng-container>
 
       <!-- EMPLOYEE -->
       <ng-container *ngIf="role === 'EMPLOYEE'">
-        <a routerLink="/my-formations" class="nav-link">
-          <mat-icon>school</mat-icon>
-          <span>My Formations</span>
-        </a>
-
         <a routerLink="/profile" class="nav-link">
           <mat-icon>person</mat-icon>
           <span>Profile</span>
         </a>
       </ng-container>
-
       <!-- NON CONNECTÉ -->
       <ng-container *ngIf="!isLogged()">
         <a routerLink="/register" class="nav-link">

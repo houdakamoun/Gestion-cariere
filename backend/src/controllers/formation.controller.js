@@ -3,21 +3,11 @@ const prisma = require("../prisma");
 // ================= CREATE =================
 exports.createFormation = async (req, res) => {
   try {
-    console.log("BODY RECEIVED:", req.body);
-
-    const { title, duration, trainerId, status, date } = req.body || {};
+    const { title, duration, trainerId, status, date } = req.body;
 
     if (!title || !duration || !trainerId) {
       return res.status(400).json({
         message: "Missing required fields",
-      });
-    }
-
-    const trainerIdNum = Number(trainerId);
-
-    if (!trainerIdNum || isNaN(trainerIdNum)) {
-      return res.status(400).json({
-        message: "Invalid trainerId",
       });
     }
 
@@ -27,20 +17,17 @@ exports.createFormation = async (req, res) => {
         duration,
         status: status || "Planned",
         date: date ? new Date(date) : new Date(),
-
-        trainer: {
-          connect: { id: trainerIdNum },
-        },
+        trainerId: Number(trainerId), // ✅ IMPORTANT
       },
       include: {
         trainer: true,
       },
     });
 
-    return res.status(201).json(formation);
+    res.status(201).json(formation);
   } catch (error) {
-    console.error("CREATE ERROR:", error);
-    return res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -160,6 +147,8 @@ exports.getPaginated = async (req, res) => {
 };
 
 // ================= STATS =================
+
+// 📊 STATS FORMATIONS
 exports.getStats = async (req, res) => {
   try {
     const total = await prisma.formation.count();
@@ -176,8 +165,47 @@ exports.getStats = async (req, res) => {
       where: { status: "Planned" },
     });
 
-    res.json({ total, completed, inProgress, planned });
+    // 📈 monthly stats
+    const formations = await prisma.formation.findMany({
+      select: { date: true },
+    });
+
+    const monthly = {};
+
+    formations.forEach((f) => {
+      if (!f.date) return;
+
+      const month = new Date(f.date).toLocaleString("default", {
+        month: "short",
+      });
+
+      monthly[month] = (monthly[month] || 0) + 1;
+    });
+
+    res.json({
+      total,
+      completed,
+      inProgress,
+      planned,
+      monthly,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+// 🔄 UPDATE STATUS (séparé proprement)
+exports.updateStatus = async (req, res) => {
+  try {
+    const { assignmentId, status } = req.body;
+
+    const updated = await prisma.assignment.update({
+      where: { id: assignmentId },
+      data: { status },
+    });
+
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };

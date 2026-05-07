@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CareerServiceService } from '../../services/career-service.service';
 
 @Component({
@@ -12,14 +12,22 @@ import { CareerServiceService } from '../../services/career-service.service';
 })
 export class CareerListComponent implements OnInit {
   careers: any[] = [];
+  users: any[] = [];
 
-  constructor(
-    private router: Router,
-    private service: CareerServiceService,
-  ) {}
+  constructor(private service: CareerServiceService) {}
 
   ngOnInit(): void {
     this.loadCareers();
+    this.loadUsers();
+  }
+
+  loadUsers(): void {
+    this.service.getUsersWithSalary().subscribe({
+      next: (data: any) => {
+        this.users = data;
+      },
+      error: (err: any) => console.log(err),
+    });
   }
 
   loadCareers(): void {
@@ -27,20 +35,10 @@ export class CareerListComponent implements OnInit {
       next: (data: any) => {
         this.careers = data;
       },
-      error: (err) => {
-        console.log('Backend not ready → using mock data');
-
-        // 🔥 fallback (important pour toi maintenant)
-        this.careers = [
-          { id: 1, name: 'Ali', position: 'Developer', department: 'IT' },
-          { id: 2, name: 'Sara', position: 'Designer', department: 'UX' },
-          { id: 3, name: 'Amine', position: 'Manager', department: 'HR' },
-        ];
+      error: (err: any) => {
+        console.error('API error', err);
+        this.careers = [];
       },
     });
-  }
-
-  viewDetail(id: number): void {
-    this.router.navigate(['/career/detail', id]);
   }
 }

@@ -1,0 +1,301 @@
+/* Styles professionnels pour le tableau utilisateur */
+.user-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+/* En-tête du tableau */
+.user-table thead tr {
+  background: linear-gradient(135deg, #2c26 0%, #3a33 100%);
+}
+
+.user-table th {
+  padding: 18px 16px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  text-align: left;
+  background: transparent;
+}
+
+/* Corps du tableau */
+.user-table tbody tr {
+  transition: all 0.25s ease;
+  border-bottom: 1px solid #e9ecef;
+  background-color: #ffffff;
+}
+
+.user-table tbody tr:hover {
+  background: linear-gradient(90deg, #f8f9fa 0%, #ffffff 100%);
+  transform: translateX(2px);
+  box-shadow: 0 2px 12px rgba(44, 38, 0, 0.08);
+}
+
+.user-table td {
+  padding: 16px;
+  color: #495057;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #f1f3f5;
+  vertical-align: middle;
+  background-color: inherit;
+}
+
+/* Dernière ligne sans bordure */
+.user-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Style pour la zone de téléchargement */
+.upload-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.upload-box label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 4px;
+}
+
+.upload-box label:hover {
+  color: #2c26;
+  transform: translateX(2px);
+}
+
+.upload-box input[type="file"] {
+  display: block;
+  font-size: 0.75rem;
+  color: #6c757d;
+  padding: 8px;
+  border: 1.5px solid #dee2e6;
+  border-radius: 10px;
+  background: #f8f9fa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.upload-box input[type="file"]:hover {
+  border-color: #2c26;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(44, 38, 0, 0.08);
+}
+
+.upload-box input[type="file"]:focus {
+  outline: none;
+  border-color: #2c26;
+  box-shadow: 0 0 0 3px rgba(44, 38, 0, 0.1);
+}
+
+/* Style pour le formatage des dates */
+.user-table td:nth-child(7) {
+  font-family: "Courier New", monospace;
+  font-size: 0.85rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+/* Effet de striping gris clair pour meilleure lisibilité */
+.user-table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.user-table tbody tr:nth-child(even):hover {
+  background: linear-gradient(90deg, #f1f3f5 0%, #f8f9fa 100%);
+}
+
+/* Style pour les cellules spécifiques */
+.user-table td:first-child,
+.user-table th:first-child {
+  padding-left: 24px;
+}
+
+.user-table td:last-child,
+.user-table th:last-child {
+  padding-right: 24px;
+}
+
+/* Badge stylisé pour les rôles */
+.user-table td:nth-child(6) {
+  font-weight: 500;
+  position: relative;
+}
+
+/* Style pour le texte des noms et prénoms */
+.user-table td:first-child,
+.user-table td:nth-child(2) {
+  font-weight: 600;
+  color: #212529;
+}
+
+/* Style pour l'email */
+.user-table td:nth-child(3) {
+  color: #2c26;
+  font-weight: 500;
+}
+
+/* Département avec icône visuelle */
+.user-table td:nth-child(4)::before {
+  content: "🏢 ";
+  opacity: 0.7;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .user-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-radius: 16px;
+  }
+
+  .user-table th,
+  .user-table td {
+    padding: 12px;
+  }
+
+  .upload-box {
+    flex-direction: row;
+    gap: 8px;
+    min-width: 200px;
+  }
+
+  .upload-box label {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .user-table th,
+  .user-table td {
+    padding: 10px;
+    font-size: 0.75rem;
+  }
+
+  .upload-box {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .upload-box input[type="file"] {
+    font-size: 0.65rem;
+    padding: 6px;
+  }
+
+  .user-table td:first-child,
+  .user-table th:first-child {
+    padding-left: 16px;
+  }
+
+  .user-table td:last-child,
+  .user-table th:last-child {
+    padding-right: 16px;
+  }
+}
+
+/* Animation subtile au survol des lignes */
+.user-table tbody tr {
+  position: relative;
+  overflow: hidden;
+}
+
+.user-table tbody tr::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, #2c26, #6c757d);
+  transform: scaleY(0);
+  transition: transform 0.25s ease;
+}
+
+.user-table tbody tr:hover::before {
+  transform: scaleY(1);
+}
+
+/* Style pour les en-têtes avec icônes optionnelles */
+.user-table th::before {
+  content: "▌";
+  margin-right: 8px;
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+/* Style moderne pour les inputs file */
+.upload-box input[type="file"]::file-selector-button {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  color: #495057;
+  border: 1px solid #dee2e6;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+.upload-box input[type="file"]::file-selector-button:hover {
+  background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+  border-color: #2c26;
+  color: #2c26;
+}
+
+/* Scrollbar stylisée */
+.user-table::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.user-table::-webkit-scrollbar-track {
+  background: #f1f3f5;
+  border-radius: 10px;
+}
+
+.user-table::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #adb5bd 0%, #6c757d 100%);
+  border-radius: 10px;
+}
+
+.user-table::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #2c26 0%, #495057 100%);
+}
+
+/* Message vide ou état de chargement */
+.user-table tbody:empty::before {
+  content: "Aucun utilisateur trouvé";
+  display: block;
+  text-align: center;
+  padding: 40px;
+  color: #adb5bd;
+  font-style: italic;
+}
+
+/* Effet de focus pour l'accessibilité */
+.user-table tr:focus-within {
+  background-color: #f1f3f5;
+  outline: 2px solid #2c26;
+  outline-offset: -2px;
+}

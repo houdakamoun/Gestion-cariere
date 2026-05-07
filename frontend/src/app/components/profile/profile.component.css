@@ -1,0 +1,181 @@
+/* === Conteneur principal === */
+.profile-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 0.5px solid #dde1e7;
+  overflow: hidden;
+  max-width: 540px;
+  margin: 24px auto;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+/* === En-tête : nom === */
+.profile-card h2 {
+  background: #0c2340;
+  color: #f0f5fb;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  padding: 28px 28px 24px;
+  letter-spacing: 0.3px;
+}
+
+/* === Paragraphes d'info === */
+.profile-card > p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 28px;
+  margin: 0;
+  font-size: 13px;
+  color: #1a2e4a;
+  border-bottom: 0.5px solid #edf0f3;
+}
+
+.profile-card > p strong {
+  color: #9aa0ab;
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  min-width: 120px;
+}
+
+/* === Séparateurs hr === */
+.profile-card hr {
+  border: none;
+  border-top: 0.5px solid #edf0f3;
+  margin: 0;
+}
+
+/* === Titres de section (Portfolio, Mes Formations) === */
+.profile-card h3 {
+  font-size: 11px;
+  font-weight: 700;
+  color: #9aa0ab;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 20px 28px 12px;
+  margin: 0;
+}
+
+/* === Photo === */
+.profile-card img {
+  display: block;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #dde1e7;
+  margin: 0 28px 16px;
+}
+
+/* === Lien CV === */
+.profile-card a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #0c2340;
+  color: #e8f0fb;
+  text-decoration: none;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0 28px 20px;
+  transition: background 0.15s;
+}
+
+.profile-card a:hover {
+  background: #1a4a7a;
+}
+
+/* === Liste des formations === */
+.profile-card ul {
+  list-style: none;
+  padding: 0 28px 24px;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.profile-card ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f5f7fa;
+  border-left: 3px solid #378add;
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #1a2e4a;
+  font-weight: 500;
+}
+
+/* === Section QR Code (hors .profile-card) === */
+h3 {
+  font-size: 11px;
+  font-weight: 700;
+  color: #9aa0ab;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 24px 0 12px;
+}
+
+qrcode {
+  display: block;
+  background: #f5f7fa;
+  border: 0.5px solid #dde1e7;
+  border-radius: 10px;
+  padding: 16px;
+  width: fit-content;
+}
+/* === Wrapper QR Code === */
+.qr-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #f5f7fa;
+  border: 0.5px solid #dde1e7;
+  border-radius: 12px;
+  padding: 16px 20px;
+  max-width: 540px;
+  margin: 16px auto;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+/* === Boîte bleue autour du QR === */
+qrcode {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0c2340;
+  border-radius: 10px;
+  padding: 10px;
+  flex-shrink: 0;
+}
+
+/* === Canvas/SVG généré par Angular QR === */
+qrcode canvas,
+qrcode svg {
+  display: block;
+  border-radius: 4px;
+}
+
+/* === Texte à côté du QR === */
+.qr-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.qr-label strong {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a2e4a;
+}
+
+.qr-label span {
+  font-size: 12px;
+  color: #9aa0ab;
+}

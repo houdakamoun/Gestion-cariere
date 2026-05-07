@@ -13,6 +13,9 @@ import { CareerTimelineComponent } from './components/career-timeline/career-tim
 import { CareerManagementComponent } from './components/careers-management/careers-management.component';
 import { AddFormationComponent } from './components/add-formation/add-formation.component';
 import { UsersComponent } from './components/users/users.component';
+import { AssignFormationComponent } from './components/assign-formation/assign-formation.component';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { AcceuilComponent } from './components/acceuil/acceuil.component';
 
 export const routes: Routes = [
   // 🔑 Login page
@@ -21,6 +24,7 @@ export const routes: Routes = [
   // 🏠 Main pages
   { path: 'dashboard', component: DashboardComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'profile/:id', component: ProfileComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'skills', component: SkillsManagementComponent },
   { path: 'careers', component: CareerManagementComponent },
@@ -31,6 +35,9 @@ export const routes: Routes = [
   { path: 'formations', component: FormationsComponent },
   { path: 'add-formations', component: AddFormationComponent },
   { path: 'users', component: UsersComponent },
+  { path: 'assigner', component: AssignFormationComponent },
+  { path: 'user-list', component: UserListComponent },
+  { path: 'acceuil', component: AcceuilComponent },
 
   // 🔁 Default route
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

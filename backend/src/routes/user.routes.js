@@ -9,6 +9,12 @@ router.get("/employees", userController.getEmployees);
 // GET all users
 router.get("/", userController.getAllUsers);
 
+// profile AVANT /:id
+router.get("/profile/:id", userController.getProfileUser);
+
+// with-salary
+router.get("/with-salary", userController.getUsersWithSalary);
+
 // GET by ID
 router.get("/:id", userController.getUserById);
 

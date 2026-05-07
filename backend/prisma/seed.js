@@ -4,6 +4,20 @@ const bcrypt = require("bcrypt");
 const prisma = new PrismaClient();
 
 async function main() {
+  // 1️⃣ Créer départements
+  await prisma.department.createMany({
+    data: [
+      { name: "Développement" },
+      { name: "Data" },
+      { name: "Design" },
+      { name: "RH" },
+      { name: "Finance" },
+      { name: "Commercial" },
+    ],
+    skipDuplicates: true,
+  });
+
+  // 2️⃣ Créer admin
   const hashedPassword = await bcrypt.hash("admin123", 10);
 
   await prisma.user.create({
@@ -15,18 +29,20 @@ async function main() {
       password: hashedPassword,
       role: "ADMIN",
       position: "Manager",
+
+      // ⚠️ tu gardes string ici (comme ton système actuel)
       department: "IT",
+
       hireDate: new Date(),
     },
   });
 
-  console.log("✅ Admin créé avec succès");
+  console.log("✅ Seed terminé");
 }
 
 main()
   .catch((e) => {
     console.error(e);
-    process.exit(1);
   })
   .finally(async () => {
     await prisma.$disconnect();

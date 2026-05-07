@@ -1,36 +1,407 @@
-<!-- ADMIN DASHBOARD -->
-<div *ngIf="role === 'ADMIN'">
-  <h2>Admin Dashboard</h2>
+<!-- src/app/dashboard/dashboard.component.html -->
 
-  <div class="cards">
-    <div>Total Users</div>
-    <div>Total Formations</div>
-    <div>System Stats</div>
+<div class="dash-layout" *ngIf="!loading; else loadingTpl">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i class="ti ti-briefcase"></i></div>
+      <div>
+        <div class="brand-name">HHTeKup</div>
+        <div class="brand-sub">Espace Admin</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">Principal</div>
+
+      <button
+        class="nav-item"
+        [class.active]="activeTab === 'overview'"
+        (click)="setTab('overview')"
+      >
+        <i class="ti ti-layout-dashboard"></i> Vue d'ensemble
+      </button>
+
+      <button
+        class="nav-item"
+        [class.active]="activeTab === 'employees'"
+        (click)="setTab('employees')"
+      >
+        <i class="ti ti-users"></i> users
+        <span class="nav-badge">{{ stats?.metrics?.totalUsers }}</span>
+      </button>
+
+      <button
+        class="nav-item"
+        [class.active]="activeTab === 'formations'"
+        (click)="setTab('formations')"
+      >
+        <i class="ti ti-school"></i> Formations
+        <span class="nav-badge">{{ stats?.metrics?.totalFormations }}</span>
+      </button>
+
+      <div class="nav-section">Organisation</div>
+
+      <button
+        class="nav-item"
+        [class.active]="activeTab === 'departments'"
+        (click)="setTab('departments')"
+      >
+        <i class="ti ti-building"></i> Départements
+      </button>
+
+      <button
+        class="nav-item"
+        [class.active]="activeTab === 'careers'"
+        (click)="setTab('careers')"
+      >
+        <i class="ti ti-trending-up"></i> Carrières
+      </button>
+    </nav>
+
+    <div class="sidebar-user">
+      <div class="user-avatar">AS</div>
+      <div class="user-info">
+        <div class="user-name">Admin System</div>
+        <div class="user-role">Administrateur</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <!-- ===== OVERVIEW ===== -->
+    <section *ngIf="activeTab === 'overview'">
+      <div class="page-header">
+        <h1 class="page-title">Vue d'ensemble</h1>
+        <p class="page-sub">Tableau de bord en temps réel</p>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label"><i class="ti ti-users"></i> users</div>
+          <div class="metric-value">{{ stats?.metrics?.totalUsers }}</div>
+          <div class="metric-sub">
+            {{ stats?.usersByRole?.length }} rôles distincts
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">
+            <i class="ti ti-school"></i> Formations
+          </div>
+          <div class="metric-value">{{ stats?.metrics?.totalFormations }}</div>
+          <div class="metric-sub">
+            {{ countByStatus("Completed") }} complétées
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">
+            <i class="ti ti-building"></i> Départements
+          </div>
+          <div class="metric-value">{{ stats?.metrics?.totalDepartments }}</div>
+          <div class="metric-sub">Équipes actives</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">
+            <i class="ti ti-trending-up"></i> Postes
+          </div>
+          <div class="metric-value">{{ stats?.metrics?.totalCareers }}</div>
+          <div class="metric-sub">Carrières définies</div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <!-- Donut chart -->
+        <div class="card">
+          <div class="card-title">
+            <i class="ti ti-chart-donut"></i> Statut des formations
+          </div>
+          <div class="donut-wrap">
+            <div class="donut-canvas">
+              <canvas id="donutChart" height="120"></canvas>
+            </div>
+            <div class="donut-legend">
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #639922"></span>
+                <span>Terminées</span>
+                <strong>{{ countByStatus("Completed") }}</strong>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #378add"></span>
+                <span>En cours</span>
+                <strong>{{ countByStatus("In Progress") }}</strong>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #ba7517"></span>
+                <span>Planifiées</span>
+                <strong>{{ countByStatus("Planned") }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Roles bar -->
+        <div class="card">
+          <div class="card-title">
+            <i class="ti ti-user-check"></i> Répartition des rôles
+          </div>
+          <div class="roles-list">
+            <div
+              class="role-item"
+              *ngFor="let r of ['EMPLOYEE', 'RH', 'ADMIN']"
+            >
+              <div class="role-row">
+                <span class="role-label">{{ roleLabel[r] }}</span>
+                <span class="role-count">{{ countByRole(r) }}</span>
+              </div>
+              <div class="progress-bar">
+                <div
+                  class="progress-fill"
+                  [style.width.%]="rolePercent(r)"
+                  [style.background]="
+                    r === 'EMPLOYEE'
+                      ? '#378ADD'
+                      : r === 'RH'
+                        ? '#1D9E75'
+                        : '#BA7517'
+                  "
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent formations -->
+      <div class="full-card">
+        <div class="card-title">
+          <i class="ti ti-calendar"></i> Formations récentes
+        </div>
+        <div class="formation-list">
+          <div class="formation-item" *ngFor="let f of stats?.recentFormations">
+            <div class="formation-icon"><i class="ti ti-code"></i></div>
+            <div class="formation-info">
+              <div class="formation-title">{{ f.title }}</div>
+              <div class="formation-meta">
+                {{ f.duration }}
+                <span *ngIf="f.trainer"
+                  >· {{ f.trainer.prenom }} {{ f.trainer.nom }}</span
+                >
+              </div>
+            </div>
+            <div class="formation-right">
+              <span class="badge" [ngClass]="getStatusClass(f.status)">
+                {{ statusLabel[f.status] || f.status }}
+              </span>
+              <div class="formation-date">
+                {{ f.date | date: "dd MMM yyyy" }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== EMPLOYEES ===== -->
+    <section *ngIf="activeTab === 'employees'">
+      <div class="page-header">
+        <h1 class="page-title">users</h1>
+        <p class="page-sub">
+          {{ stats?.metrics?.totalUsers }} utilisateurs enregistrés
+        </p>
+      </div>
+      <div class="full-card">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Email</th>
+              <th>Rôle</th>
+              <th>Département</th>
+              <th>Poste</th>
+              <th>Embauche</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let emp of stats?.employees">
+              <td>
+                <div class="user-cell">
+                  <div class="avatar-sm av-blue">
+                    {{ getInitials(emp.nom, emp.prenom) }}
+                  </div>
+                  {{ emp.prenom }} {{ emp.nom }}
+                </div>
+              </td>
+              <td class="text-muted">{{ emp.email }}</td>
+              <td>
+                <span class="badge" [ngClass]="getRoleClass(emp.role)">{{
+                  emp.role
+                }}</span>
+              </td>
+              <td>{{ emp.department }}</td>
+              <td>{{ emp.position }}</td>
+              <td class="text-muted">
+                {{ emp.hireDate | date: "dd MMM yyyy" }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== FORMATIONS ===== -->
+    <section *ngIf="activeTab === 'formations'">
+      <div class="page-header">
+        <h1 class="page-title">Formations</h1>
+        <p class="page-sub">
+          {{ stats?.metrics?.totalFormations }} formations au total
+        </p>
+      </div>
+
+      <div class="filter-bar">
+        <button
+          class="filter-btn"
+          [class.active]="activeFilter === 'all'"
+          (click)="filterFormations('all')"
+        >
+          <i class="ti ti-list"></i> Toutes
+        </button>
+        <button
+          class="filter-btn"
+          [class.active]="activeFilter === 'Completed'"
+          (click)="filterFormations('Completed')"
+        >
+          <i class="ti ti-check"></i> Terminées
+        </button>
+        <button
+          class="filter-btn"
+          [class.active]="activeFilter === 'In Progress'"
+          (click)="filterFormations('In Progress')"
+        >
+          <i class="ti ti-player-play"></i> En cours
+        </button>
+        <button
+          class="filter-btn"
+          [class.active]="activeFilter === 'Planned'"
+          (click)="filterFormations('Planned')"
+        >
+          <i class="ti ti-clock"></i> Planifiées
+        </button>
+      </div>
+
+      <div class="full-card">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Formation</th>
+              <th>Durée</th>
+              <th>Date</th>
+              <th>Statut</th>
+              <th>Formateur</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let f of filteredFormations || stats?.recentFormations || []
+              "
+            >
+              <td>
+                <strong>{{ f.title }}</strong>
+              </td>
+              <td>{{ f.duration }}</td>
+              <td class="text-muted">{{ f.date | date: "dd MMM yyyy" }}</td>
+              <td>
+                <span class="badge" [ngClass]="getStatusClass(f.status)">
+                  {{ statusLabel[f.status] || f.status }}
+                </span>
+              </td>
+              <td>
+                <span *ngIf="f.trainer"
+                  >{{ f.trainer.prenom }} {{ f.trainer.nom }}</span
+                >
+                <span *ngIf="!f.trainer" class="text-muted">—</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== DEPARTMENTS ===== -->
+    <section *ngIf="activeTab === 'departments'">
+      <div class="page-header">
+        <h1 class="page-title">Départements</h1>
+        <p class="page-sub">
+          {{ stats?.metrics?.totalDepartments }} départements dans
+          l'organisation
+        </p>
+      </div>
+      <div class="two-col">
+        <div class="full-card">
+          <div class="card-title"><i class="ti ti-building"></i> Liste</div>
+          <div class="dept-list">
+            <div
+              class="dept-item"
+              *ngFor="let d of stats?.departments; let i = index"
+            >
+              <span
+                class="dept-dot"
+                [style.background]="
+                  [
+                    '#378ADD',
+                    '#1D9E75',
+                    '#D4537E',
+                    '#EF9F27',
+                    '#E24B4A',
+                    '#7F77DD',
+                  ][i % 6]
+                "
+              ></span>
+              <span class="dept-name">{{ d.name }}</span>
+              <span class="dept-count">
+                {{ getEmployeeCount(d.name) }} emp.
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="full-card">
+          <div class="card-title">
+            <i class="ti ti-chart-bar"></i> Effectifs par département
+          </div>
+          <div style="position: relative; height: 220px">
+            <canvas id="deptChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CAREERS ===== -->
+    <section *ngIf="activeTab === 'careers'">
+      <div class="page-header">
+        <h1 class="page-title">Grille des carrières</h1>
+        <p class="page-sub">
+          {{ stats?.metrics?.totalCareers }} postes définis
+        </p>
+      </div>
+      <div class="careers-grid">
+        <div class="career-card" *ngFor="let c of stats?.careers">
+          <div class="career-dept">{{ c.department }}</div>
+          <div class="career-title">{{ c.title }}</div>
+          <div class="career-desc">{{ c.description }}</div>
+          <div class="career-salary">
+            {{ c.baseSalary | number }} <span>TND / mois</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- LOADING -->
+<ng-template #loadingTpl>
+  <div class="loading-state">
+    <i class="ti ti-loader-2"></i>
+    <p>Chargement du dashboard...</p>
   </div>
-
-  <p>Welcome Admin 👑</p>
-</div>
-
-<!-- RH DASHBOARD -->
-<div *ngIf="role === 'RH'">
-  <h2>RH Dashboard</h2>
-
-  <div class="cards">
-    <div>Formations RH</div>
-    <div>Employees</div>
-    <div>Departements</div>
-  </div>
-
-  <p>Welcome HR 👩‍💼</p>
-</div>
-<div *ngIf="role === 'ADMIN'">
-  <a routerLink="/users">Users</a>
-</div>
-
-<div *ngIf="role === 'RH'">
-  <a routerLink="/formations">Formations</a>
-</div>
-<!-- LOADING / UNKNOWN -->
-<div *ngIf="!role">
-  <p>Loading dashboard...</p>
-</div>
+</ng-template>

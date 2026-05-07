@@ -31,4 +31,7 @@ export class FormationService {
 
     return this.http.get<any[]>(`${this.api}/filter?status=${status}`);
   }
+  getStats() {
+    return this.http.get<any>('http://localhost:3000/formations/stats');
+  }
 }

@@ -1,1 +1,62 @@
-<p>profile works!</p>
+<div class="profile-card" *ngIf="user">
+  <h2>{{ user?.nom }} {{ user?.prenom }}</h2>
+
+  <p><strong>Email :</strong> {{ user?.email }}</p>
+  <p><strong>Role :</strong> {{ user?.role }}</p>
+  <p><strong>Poste :</strong> {{ user?.position }}</p>
+  <p><strong>Département :</strong> {{ user?.department }}</p>
+  <p><strong>Date embauche :</strong> {{ user?.hireDate | date }}</p>
+
+  <hr />
+
+  <h3>Mon Photo</h3>
+
+  <!-- PHOTO -->
+  <div *ngIf="profile?.photo; else noPhoto">
+    <img
+      [src]="'http://localhost:3000' + profile.photo"
+      width="120"
+      style="border-radius: 10px"
+    />
+  </div>
+
+  <ng-template #noPhoto>
+    <p>Aucune photo</p>
+  </ng-template>
+
+  <!-- CV -->
+  <div style="margin-top: 10px">
+    <a
+      *ngIf="profile?.cv; else noCv"
+      [href]="'http://localhost:3000' + profile.cv"
+      target="_blank"
+    >
+      📄 Voir CV
+    </a>
+
+    <ng-template #noCv>
+      <p>Aucun CV</p>
+    </ng-template>
+  </div>
+
+  <h3>Mes Formations</h3>
+
+  <ul>
+    <li *ngFor="let f of formations">{{ f.title }} - {{ f.duration }}</li>
+  </ul>
+</div>
+
+<!-- QR CODE -->
+<div class="qr-wrapper" *ngIf="user">
+  <qrcode
+    [qrdata]="'http://localhost:4200/profile/' + user?.id"
+    [width]="120"
+    [errorCorrectionLevel]="'M'"
+  >
+  </qrcode>
+
+  <div class="qr-label">
+    <strong>Mon QR Code</strong>
+    <span>localhost:4200/profile/{{ user?.id }}</span>
+  </div>
+</div>
