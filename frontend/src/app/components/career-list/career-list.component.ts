@@ -23,8 +23,9 @@ export class CareerListComponent implements OnInit {
 
   loadUsers(): void {
     this.service.getUsersWithSalary().subscribe({
-      next: (data: any) => {
-        this.users = data;
+      next: (res: any) => {
+        console.log('users:', res); // debug
+        this.users = res; // ✅ FIX
       },
       error: (err: any) => console.log(err),
     });
@@ -32,8 +33,9 @@ export class CareerListComponent implements OnInit {
 
   loadCareers(): void {
     this.service.getAllCareers().subscribe({
-      next: (data: any) => {
-        this.careers = data;
+      next: (res: any) => {
+        console.log('careers:', res); // debug
+        this.careers = res; // ✅ FIX
       },
       error: (err: any) => {
         console.error('API error', err);
