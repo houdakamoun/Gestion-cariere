@@ -34,4 +34,7 @@ export class FormationService {
   getStats() {
     return this.http.get<any>('http://localhost:3000/formations/stats');
   }
+  getById(id: number) {
+    return this.http.get(`${this.api}/${id}`);
+  }
 }

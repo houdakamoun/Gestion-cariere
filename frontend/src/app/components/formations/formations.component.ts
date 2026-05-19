@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormationService } from '../../services/formation.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
@@ -20,32 +20,16 @@ export class FormationsComponent implements OnInit {
   constructor(
     private service: FormationService,
     private sanitizer: DomSanitizer,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.loadFormations();
 
-    // 🎥 VIDEOS (tu peux plus tard les récupérer depuis backend)
-    this.videos = [
-      {
-        title: 'Angular Basics',
-        duration: '10 min',
-        url: 'https://www.youtube.com/embed/2OHbjep_WjQ',
-        thumbnail: 'https://img.youtube.com/vi/2OHbjep_WjQ/0.jpg',
-      },
-      {
-        title: 'React Tutorial',
-        duration: '12 min',
-        url: 'https://www.youtube.com/embed/w7ejDZ8SWv8',
-        thumbnail: 'https://img.youtube.com/vi/w7ejDZ8SWv8/0.jpg',
-      },
-      {
-        title: 'Spark Introduction',
-        duration: '8 min',
-        url: 'https://www.youtube.com/embed/_C8kWso4ne4',
-        thumbnail: 'https://img.youtube.com/vi/_C8kWso4ne4/0.jpg',
-      },
-    ];
+    // 🔥 force refresh à chaque retour sur la page
+    this.router.events.subscribe(() => {
+      this.loadFormations();
+    });
   }
 
   loadFormations(): void {
@@ -68,12 +52,33 @@ export class FormationsComponent implements OnInit {
     }
   }
 
-  // 🎥 OPEN VIDEO (MODAL)
+  // 🎥 OPEN VIDEO
   openVideo(url: string) {
     this.selectedVideo = this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   closeVideo() {
     this.selectedVideo = null;
+  }
+
+  // ✏️ EDIT
+  editFormation(id: number) {
+    this.router.navigate(['/edit-formation', id]);
+  }
+
+  // 🗑 DELETE
+  deleteFormation(id: number) {
+    const confirmDelete = confirm(
+      'Are you sure you want to delete this formation?',
+    );
+
+    if (confirmDelete) {
+      this.service.delete(id).subscribe({
+        next: () => {
+          this.formations = this.formations.filter((f) => f.id !== id);
+        },
+        error: (err) => console.error(err),
+      });
+    }
   }
 }

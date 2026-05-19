@@ -61,16 +61,23 @@ exports.updateFormation = async (req, res) => {
   try {
     const { id } = req.params;
 
+    console.log("🔥 BODY RECEIVED:", req.body);
+
+    const { title, duration, date, status } = req.body;
+
     const formation = await prisma.formation.update({
       where: { id: Number(id) },
-      data: req.body,
-      include: {
-        trainer: true,
+      data: {
+        title,
+        duration: String(duration), // ✅ important
+        date: date ? new Date(date) : undefined,
+        status,
       },
     });
 
     res.json(formation);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -207,5 +214,24 @@ exports.updateStatus = async (req, res) => {
     res.json(updated);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+exports.getById = async (req, res) => {
+  try {
+    const formation = await prisma.formation.findUnique({
+      where: {
+        id: Number(req.params.id),
+      },
+    });
+
+    if (!formation) {
+      return res.status(404).json({
+        message: "Formation not found",
+      });
+    }
+
+    res.json(formation);
+  } catch (error) {
+    res.status(500).json(error);
   }
 };

@@ -10,22 +10,24 @@ const {
   getPaginated,
   getStats,
   updateStatus,
+  getById,
 } = require("../controllers/formation.controller");
 
 // ➕ CREATE
 router.post("/", createFormation);
 
+// 📊 STATS
+router.get("/stats", getStats);
+
 // 📥 READ
 router.get("/", getAllFormations);
 router.get("/filter", getByStatus);
 router.get("/paginated", getPaginated);
-
-// 📊 STATS
-router.get("/stats", getStats);
+router.get("/:id", getById);
 
 // ✏️ UPDATE
 router.put("/:id", updateFormation);
-router.patch("/status", updateStatus); // 👈 important pour update status séparé
+router.patch("/status", updateStatus);
 
 // ❌ DELETE
 router.delete("/:id", deleteFormation);

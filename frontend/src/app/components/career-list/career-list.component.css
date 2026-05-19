@@ -1,81 +1,131 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .container {
-  padding: 30px;
-  background: #f4f6f9;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  background: #f1f5f9;
   min-height: 100vh;
 }
 
-.title {
-  margin-bottom: 20px;
-  color: #2c3e50;
-}
-
-/* CARD */
-.table-card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-}
-
-/* TABLE */
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-thead {
-  background: #3f51b5;
-  color: white;
-}
-
-th {
-  padding: 14px;
-  text-align: left;
-}
-
-td {
-  padding: 14px;
-  border-bottom: 1px solid #eee;
-}
-
-/* HOVER */
-tr:hover {
-  background: #f9fafc;
-}
-
-/* BADGE */
-.badge {
-  background: #e3f2fd;
-  color: #1976d2;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-}
-
-/* BUTTON */
-.btn-view {
-  padding: 6px 14px;
-  background: #3f51b5;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.btn-view:hover {
-  background: #303f9f;
-}
-
-.actions {
+.container h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #4b43dc;
+  margin-bottom: 1.5rem;
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-.btn-edit {
-  background: #ff9800;
+.container h2::before {
+  content: "";
+  font-size: 1.8rem;
+}
+
+/* Table container pour overflow sur mobile */
+.container table {
+  width: 100%;
+  background: white;
+  border-radius: 1rem;
+  border-collapse: collapse;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px #4b43dc 0 2px 4px -1px #4b43dc;
+}
+
+.container thead {
+  background: #4b43dc;
+}
+
+.container th {
+  text-align: left;
+  padding: 1.25rem 1.5rem;
   color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.container td {
+  padding: 1rem 1.5rem;
+  color: #334155;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.container tbody tr {
+  transition: all 0.2s ease;
+}
+
+.container tbody tr:hover {
+  background: #f8fafc;
+  cursor: pointer;
+}
+
+.container tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Style spécial pour la colonne Salary */
+.container td:last-child {
+  font-weight: 700;
+  color: #059669;
+  font-size: 0.9rem;
+}
+
+.container td:last-child::before {
+  content: "💰 ";
+  font-size: 0.75rem;
+}
+
+/* Responsive pour mobile */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .container h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Table scrollable sur mobile */
+  .container {
+    overflow-x: auto;
+  }
+
+  .container table {
+    min-width: 600px;
+  }
+
+  .container th,
+  .container td {
+    padding: 0.875rem 1rem;
+  }
+}
+
+/* Animation d'entrée */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container table {
+  animation: fadeIn 0.3s ease-out;
 }

@@ -1,0 +1,52 @@
+<div class="edit-container">
+  <div class="card">
+    <h2>Modifier Formation</h2>
+
+    <form (ngSubmit)="updateFormation()">
+      <!-- TITLE -->
+      <div class="form-group">
+        <label>Title</label>
+
+        <input
+          type="text"
+          [(ngModel)]="formation.title"
+          name="title"
+          required
+        />
+      </div>
+
+      <!-- DURATION -->
+      <div class="form-group">
+        <label>Duration</label>
+
+        <input
+          type="text"
+          [(ngModel)]="formation.duration"
+          name="duration"
+          required
+        />
+      </div>
+
+      <!-- DATE -->
+      <div class="form-group">
+        <label>Date</label>
+
+        <input type="date" [(ngModel)]="formation.date" name="date" required />
+      </div>
+
+      <!-- STATUS -->
+      <div class="form-group">
+        <label>Status</label>
+
+        <select [(ngModel)]="formation.status" name="status">
+          <option value="Planned">Planned</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+
+      <!-- BUTTON -->
+      <button type="submit" class="btn-update">Modifier Formation</button>
+    </form>
+  </div>
+</div>

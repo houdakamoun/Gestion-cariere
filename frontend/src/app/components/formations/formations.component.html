@@ -33,6 +33,7 @@
           <th>Duration</th>
           <th>Date</th>
           <th>Status</th>
+          <th>Actions</th>
         </tr>
       </thead>
 
@@ -53,6 +54,17 @@
             >
               {{ f.status }}
             </span>
+          </td>
+
+          <!-- ACTION BUTTONS -->
+          <td class="action-buttons">
+            <button class="btn-edit" (click)="editFormation(f.id)">
+              Modifier
+            </button>
+
+            <button class="btn-delete" (click)="deleteFormation(f.id)">
+              Supprimer
+            </button>
           </td>
         </tr>
       </tbody>

@@ -1,27 +1,453 @@
-.container {
-  padding: 30px;
-  max-width: 400px;
-  margin: auto;
+/* Reset et styles de base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  background: linear-gradient(135deg, #667eea 0%, #4b43dc 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family:
+    "Poppins",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  padding: 20px;
+
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Effet de particules animées en arrière-plan */
+body::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 1px,
+    transparent 1px
+  );
+  background-size: 50px 50px;
+  animation: moveBackground 20s linear infinite;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+@keyframes moveBackground {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(50px, 50px);
+  }
+}
+
+.container {
+  max-width: 650px;
+  width: 100%;
+  padding: 3rem 2.8rem;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(20px);
+  border-radius: 32px;
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.5) inset,
+    0 0 0 2px rgba(75, 67, 220, 0.1),
+    0 0 40px rgba(75, 67, 220, 0.3);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  margin: 20px auto;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #4b43dc, #764ba2, #ff6b6b, #4b43dc);
+  background-size: 300% 100%;
+  animation: gradientBorder 3s ease infinite;
+  border-radius: 32px 32px 0 0;
+}
+
+@keyframes gradientBorder {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
+}
+
+.container:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow:
+    0 30px 60px -15px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.6) inset,
+    0 0 0 3px rgba(75, 67, 220, 0.15),
+    0 0 50px rgba(75, 67, 220, 0.5);
+}
+
+/* Titre amélioré */
+.container h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, #4b43dc 0%, #764ba2 50%, #ff6b6b 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.container h2::before {
+  content: "✧";
+  margin-right: 15px;
+  opacity: 0.7;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, #4b43dc, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.container h2::after {
+  content: "✧";
+  margin-left: 15px;
+  opacity: 0.7;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, #764ba2, #4b43dc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Form avec espaces réduits */
 form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 0.8rem; /* Réduit de 1.5rem à 0.8rem */
 }
 
-input,
-select {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+/* Labels améliorés */
+form label {
+  display: block;
+  margin-bottom: 0.3rem; /* Réduit de 0.5rem à 0.3rem */
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #4b43dc;
+  font-family: inherit;
+  position: relative;
+  padding-left: 5px;
+  transition: all 0.3s ease;
 }
 
-button {
-  background: #3f51b5;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 6px;
+form label::before {
+  content: "▹";
+  position: absolute;
+  left: -8px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: #4b43dc;
+}
+
+form .field-group:hover label::before {
+  opacity: 1;
+  left: -12px;
+}
+
+/* Inputs & Selects améliorés */
+form input,
+form select {
+  width: 100%;
+  padding: 12px 18px; /* Réduit de 14px à 12px */
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #1a1a2e;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+  border: 2px solid #e8e8f0;
+  border-radius: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+}
+
+form input:hover,
+form select:hover {
+  border-color: #4b43dc;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(75, 67, 220, 0.15);
+  background: white;
+}
+
+form input:focus,
+form select:focus {
+  outline: none;
+  border-color: #4b43dc;
+  box-shadow:
+    0 0 0 4px rgba(75, 67, 220, 0.15),
+    0 8px 20px rgba(75, 67, 220, 0.2);
+  transform: translateY(-2px);
+  background: white;
+}
+
+/* Style spécial pour les selects */
+form select {
   cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234b43dc' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  background-size: 20px;
+}
+
+/* Style pour les options */
+form select option {
+  padding: 14px;
+  background: white;
+  color: #1a1a2e;
+  font-weight: 500;
+}
+
+form select option:hover {
+  background: #4b43dc;
+  color: white;
+}
+
+form select option:checked {
+  background: linear-gradient(135deg, #4b43dc 0%, #3a32b8 100%);
+  color: white;
+}
+
+/* Style pour input date amélioré */
+input[type="date"] {
+  cursor: pointer;
+  position: relative;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0.3);
+  opacity: 0.6;
+  transition: all 0.3s ease;
+  padding: 5px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+  filter: invert(0.2);
+  transform: scale(1.1);
+}
+
+/* Bouton submit amélioré */
+button[type="submit"] {
+  width: 100%;
+  padding: 16px 28px; /* Réduit de 18px à 16px */
+  background: linear-gradient(135deg, #4b43dc 0%, #3a32b8 50%, #ff6b6b 100%);
+  background-size: 200% auto;
+  color: white;
+  border: none;
+  border-radius: 24px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(75, 67, 220, 0.4);
+  margin-top: 0.8rem; /* Réduit de 1rem à 0.8rem */
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background-position: 100% 0;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(75, 67, 220, 0.5);
+}
+
+button[type="submit"]:active:not(:disabled) {
+  transform: translateY(-1px) scale(0.99);
+}
+
+button[type="submit"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  background: linear-gradient(135deg, #b0b0b0 0%, #909090 100%);
+  box-shadow: none;
+}
+
+/* Icône dans le bouton */
+button[type="submit"]::before {
+  content: "✨";
+  margin-right: 12px;
+  font-size: 1.1rem;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+button[type="submit"]:hover:not(:disabled)::before {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Animation de pulse améliorée */
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 8px 25px rgba(75, 67, 220, 0.4);
+  }
+  50% {
+    box-shadow: 0 8px 35px rgba(75, 67, 220, 0.7);
+  }
+}
+
+button[type="submit"]:not(:disabled) {
+  animation: pulse 2s infinite;
+}
+
+/* Animation d'entrée améliorée */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.container {
+  animation: slideIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Badge nouveau */
+.container::after {
+  content: "NEW";
+  position: absolute;
+  top: 20px;
+  right: -12px;
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+  transform: rotate(5deg);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Messages d'erreur stylisés */
+.error-message {
+  color: #ff6b6b;
+  font-size: 0.7rem;
+  margin-top: 0.2rem; /* Réduit de 0.25rem à 0.2rem */
+  padding-left: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.error-message::before {
+  content: "⚠️";
+  font-size: 0.65rem;
+}
+
+/* Field group pour meilleur spacing */
+.field-group {
+  position: relative;
+}
+
+/* Responsive amélioré */
+@media (max-width: 640px) {
+  .container {
+    max-width: 95%;
+    padding: 2.5rem 1.8rem;
+  }
+
+  .container h2 {
+    font-size: 1.6rem;
+  }
+
+  .container h2::before,
+  .container h2::after {
+    display: none;
+  }
+
+  form {
+    gap: 0.7rem; /* Réduit pour mobile */
+  }
+
+  form input,
+  form select {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  button[type="submit"] {
+    padding: 14px 24px;
+    font-size: 0.85rem;
+  }
+
+  form label {
+    font-size: 0.7rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .container::after {
+    font-size: 0.55rem;
+    padding: 3px 10px;
+    top: 15px;
+    right: -8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 2rem 1.5rem;
+  }
+
+  .container h2 {
+    font-size: 1.4rem;
+  }
+
+  form {
+    gap: 0.6rem; /* Réduit pour petits mobiles */
+  }
 }
