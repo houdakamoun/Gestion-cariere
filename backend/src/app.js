@@ -4,9 +4,18 @@ const path = require("path");
 
 const app = express();
 
+const corsOrigin = process.env.CORS_ORIGIN || "http://localhost:4200";
+const allowedOrigins = corsOrigin.split(",").map((o) => o.trim());
+
 app.use(
   cors({
-    origin: "http://localhost:4200",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   }),
 );
@@ -31,6 +40,10 @@ const statsRoutes = require("./routes/stats.routes");
 
 app.get("/", (req, res) => {
   res.send("Backend is running 🚀");
+});
+
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
 });
 
 app.use("/auth", authRoutes);

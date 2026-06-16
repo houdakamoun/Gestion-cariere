@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { API_URL } from '../../core/api-url';
 
 @Component({
   selector: 'app-assign-formation',
@@ -27,19 +28,19 @@ export class AssignFormationComponent implements OnInit {
 
   loadUsers() {
     this.http
-      .get<any[]>('http://localhost:3000/users')
+      .get<any[]>(`${API_URL}/users`)
       .subscribe((data) => (this.users = data));
   }
 
   loadFormations() {
     this.http
-      .get<any[]>('http://localhost:3000/api/formations')
+      .get<any[]>(`${API_URL}/api/formations`)
       .subscribe((data) => (this.formations = data));
   }
 
   assign() {
     this.http
-      .post('http://localhost:3000/assignment/assign-formation', {
+      .post(`${API_URL}/assignment/assign-formation`, {
         userId: this.selectedUser,
         formationId: this.selectedFormation,
       })

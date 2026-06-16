@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { API_URL } from '../../core/api-url';
 
 @Component({
   selector: 'app-user-list',
@@ -11,6 +12,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './user-list.component.css',
 })
 export class UserListComponent implements OnInit {
+  readonly apiUrl = API_URL;
   users: any[] = [];
 
   // 🔥 stock temporaire des fichiers (IMPORTANT)
@@ -24,7 +26,7 @@ export class UserListComponent implements OnInit {
 
   // 📌 charger users + profile
   loadUsers() {
-    this.http.get('http://localhost:3000/users').subscribe((res: any) => {
+    this.http.get(`${API_URL}/users`).subscribe((res: any) => {
       this.users = res;
     });
   }
@@ -58,7 +60,7 @@ export class UserListComponent implements OnInit {
     }
 
     this.http
-      .put(`http://localhost:3000/profiles/${userId}`, formData)
+      .put(`${API_URL}/profiles/${userId}`, formData)
       .subscribe(() => {
         console.log('Profile updated ✔');
         this.loadUsers(); // refresh table

@@ -1,0 +1,31 @@
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Uploads (runtime)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Angular
+frontend/dist/
+frontend/.angular/
+
+# Docker volumes (local)
+mysql_data/

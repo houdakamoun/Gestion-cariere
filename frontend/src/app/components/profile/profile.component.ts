@@ -4,6 +4,7 @@ import { UserService } from '../../services/user.service';
 import { HttpClient } from '@angular/common/http';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { API_URL, FRONTEND_URL } from '../../core/api-url';
 
 @Component({
   selector: 'app-profile',
@@ -13,6 +14,8 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
+  readonly apiUrl = API_URL;
+  readonly frontendUrl = FRONTEND_URL;
   user: any;
   profile: any;
   formations: any[] = [];
@@ -65,7 +68,7 @@ export class ProfileComponent implements OnInit {
 
   loadUserFormations(userId: number) {
     this.http
-      .get<any[]>(`http://localhost:3000/assignment/user/${userId}`)
+      .get<any[]>(`${API_URL}/assignment/user/${userId}`)
       .subscribe((data: any[]) => {
         this.formations = data;
       });

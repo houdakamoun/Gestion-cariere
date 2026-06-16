@@ -25,7 +25,7 @@
     <td>
       <img
         *ngIf="user.profile?.photo"
-        [src]="'http://localhost:3000' + user.profile.photo"
+        [src]="apiUrl + user.profile.photo"
         width="50"
       />
 

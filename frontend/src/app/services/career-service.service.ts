@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { API_URL } from '../core/api-url';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CareerServiceService {
-  private api = 'http://localhost:3000';
-  private userApi = 'http://localhost:3000/users';
+  private api = API_URL;
+  private userApi = `${API_URL}/users`;
 
   constructor(private http: HttpClient) {}
 
@@ -15,7 +16,7 @@ export class CareerServiceService {
     return this.http.get(`${this.api}/careers/stats`);
   }
   getAllCareers() {
-    return this.http.get('http://localhost:3000/careers');
+    return this.http.get(`${API_URL}/careers`);
   }
   getCareerById(id: number) {
     return this.http.get<any>(`${this.api}/${id}`);

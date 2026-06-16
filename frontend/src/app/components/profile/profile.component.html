@@ -14,7 +14,7 @@
   <!-- PHOTO -->
   <div *ngIf="profile?.photo; else noPhoto">
     <img
-      [src]="'http://localhost:3000' + profile.photo"
+      [src]="apiUrl + profile.photo"
       width="120"
       style="border-radius: 10px"
     />
@@ -28,7 +28,7 @@
   <div style="margin-top: 10px">
     <a
       *ngIf="profile?.cv; else noCv"
-      [href]="'http://localhost:3000' + profile.cv"
+      [href]="apiUrl + profile.cv"
       target="_blank"
     >
       📄 Voir CV
@@ -49,7 +49,7 @@
 <!-- QR CODE -->
 <div class="qr-wrapper" *ngIf="user">
   <qrcode
-    [qrdata]="'http://localhost:4200/profile/' + user?.id"
+    [qrdata]="frontendUrl + '/profile/' + user?.id"
     [width]="120"
     [errorCorrectionLevel]="'M'"
   >
@@ -57,6 +57,6 @@
 
   <div class="qr-label">
     <strong>Mon QR Code</strong>
-    <span>localhost:4200/profile/{{ user?.id }}</span>
+    <span>{{ frontendUrl }}/profile/{{ user?.id }}</span>
   </div>
 </div>

@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { API_URL } from '../core/api-url';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormationService {
-  private api = 'http://localhost:3000/api/formations';
+  private api = `${API_URL}/api/formations`;
 
   constructor(private http: HttpClient) {}
 
@@ -32,7 +33,7 @@ export class FormationService {
     return this.http.get<any[]>(`${this.api}/filter?status=${status}`);
   }
   getStats() {
-    return this.http.get<any>('http://localhost:3000/formations/stats');
+    return this.http.get<any>(`${API_URL}/formations/stats`);
   }
   getById(id: number) {
     return this.http.get(`${this.api}/${id}`);

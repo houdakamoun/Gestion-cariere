@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_URL } from '../core/api-url';
 
 export interface DashboardStats {
   metrics: {
@@ -55,7 +56,7 @@ export interface Employee {
 
 @Injectable({ providedIn: 'root' })
 export class StatsService {
-  private apiUrl = 'http://localhost:3000/api'; // adapte ton port
+  private apiUrl = `${API_URL}/api`;
 
   constructor(private http: HttpClient) {}
 
